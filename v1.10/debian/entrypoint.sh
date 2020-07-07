@@ -26,3 +26,5 @@ if [ "$1" = "fluentd" ]; then
 fi
 
 exec "$@"
+
+

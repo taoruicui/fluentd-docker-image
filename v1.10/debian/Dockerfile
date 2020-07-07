@@ -76,7 +76,12 @@ ENV FLUENTD_CONF="fluent.conf"
 ENV LD_PRELOAD="/usr/lib/libjemalloc.so.2"
 EXPOSE 24224 5140
 
+# Change 1: Download dumb-init
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
+
+
 USER fluent
-ENTRYPOINT ["tini",  "--", "/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/dumb-init","--rewrite","15:30", "/bin/entrypoint.sh"]
 CMD ["fluentd"]
 
